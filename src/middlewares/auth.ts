@@ -5,6 +5,7 @@ import { JWT_SECRET } from "../secrets";
 import { prismaClient } from "..";
 
 export const authMiddleware = async (req: Request, res:Response, next: NextFunction)=>{
+    console.log("auth middleware triggered");
     /// 1. Extract the token
     const token = req.headers.authorization;
     /// 2. Token not present throw unauthorized error
