@@ -27,11 +27,12 @@ export const getProductList = async (req: Request, res: Response, next: NextFunc
 
     // response structure
     // { count : int, data: []}
-    const count = await prismaClient.product.count
-    const products = await prismaClient.product.findMany({
-       take: 5,
-       skip: +req.query.skip! || 0,
-    })
+    const count = await prismaClient.product.count()
+    const queryParams: {skip?:number, take?: number} = req.params.skip ? {skip : +req.params.skip, take: 5} : {};
+    const products = await prismaClient.product.findMany(
+       queryParams
+    )
+    console.log(`count ===> ${count}`);
     res.json({
         count,
         data: products
@@ -43,15 +44,8 @@ export const getProductList = async (req: Request, res: Response, next: NextFunc
 
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-    try{
-        productSchema.parse(req.body);
-    }catch(err){
-        if(err instanceof ZodError){
-            throw new UnprocessabilityException("Unprocessible entity", err.errors);
-        }else{
-            throw new UnprocessabilityException("Unprocessible entity", err);
-        }
-    }
+  
+    productSchema.parse(req.body);
     const product = await prismaClient.product.create({
         data: {
           ...req.body,
