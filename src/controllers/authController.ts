@@ -18,16 +18,8 @@ import { NotFoundException } from "../exceptions/notFoundException";
 export const signUp = async (req:Request, res:Response, next: NextFunction) =>{
     
     const {email, password, name} = req.body;
-    try{
-        signUpSchema.parse(req.body)
-    }catch(err){
-        if(err instanceof ZodError){
-            throw new UnprocessabilityException("Unprocessible entity", err.errors)
-        }
-        throw new UnprocessabilityException("Unprocessible entity!", err)
-    }
    
-
+    signUpSchema.parse(req.body)
     let user = await prismaClient.user.findFirst({where:{email}});
 
     if(user){
