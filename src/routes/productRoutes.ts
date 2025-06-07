@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, Router } from "express";
+import { Router } from "express";
 import { errorHandler } from "../errorHandler";
 import { createProduct, deleteProduct, getProductById, getProductList, updateProduct } from "../controllers/productController";
 import adminMiddleware from "../middlewares/admin";
