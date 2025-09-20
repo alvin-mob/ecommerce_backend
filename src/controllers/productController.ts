@@ -4,6 +4,7 @@ import { NotFoundException } from "../exceptions/notFoundException";
 import { productSchema } from "../schema/products";
 import { UnprocessabilityException } from "../exceptions/validations";
 import { ZodError } from "zod";
+import { ErrorCode } from "../exceptions/root";
 
 //get product by id
 
@@ -16,7 +17,7 @@ export const getProductById = async (req: Request, res: Response, next: NextFunc
         })
         res.json(product);
     }catch(err){
-        throw new NotFoundException("Product not found!", null);
+        throw new NotFoundException("Product not found!", ErrorCode.PRODUCT_NOT_FOUND, null);
     }
  
 }
@@ -79,7 +80,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
         })
         res.json(updatedProduct);
     }catch(err){
-        throw new NotFoundException("Product not found!", null)
+        throw new NotFoundException("Product not found!", ErrorCode.PRODUCT_NOT_FOUND, null)
     }
 
 }
@@ -93,7 +94,7 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
             }
         });
     }catch(err){
-        throw new NotFoundException("Product not found!", null);
+        throw new NotFoundException("Product not found!", ErrorCode.PRODUCT_NOT_FOUND, null);
     }
    
     res.send("Product deleted!")
