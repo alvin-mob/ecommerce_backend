@@ -1,9 +1,8 @@
 import {Router} from 'express'
 
-
-import { cancelOrder, changeStatus, createOrder, getOrderById, listAllOrders, listOrders, listUserOrders } from '../controllers/orders'
 import { authMiddleware } from '../middlewares/auth'
 import { errorHandler } from '../errorHandler'
+import { cancelOrder, createOrder, getOrderById, listOrders } from '../controllers/orderController'
 
 
 const orderRoutes:Router = Router()
